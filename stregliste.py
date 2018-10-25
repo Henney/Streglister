@@ -108,6 +108,9 @@ class GUI:
 		top.attributes('-fullscreen', True)
 		self.screen_width = top.winfo_screenwidth()
 		self.screen_height = top.winfo_screenheight()
+		self.FONT_SMALL = self.screen_height/80
+		self.FONT_MEDIUM = self.screen_height/40
+		self.FONT_BIG = self.screen_height/20
 		
 		self.stregliste = stregliste		
 		amount = len(self.stregliste.bartenders)
@@ -123,17 +126,17 @@ class GUI:
 			text = StringVar()
 			text.set(bartender)
 			# We set a dummy height so that the button doesn't scale with its contents
-			b = Button(top, height=10, width=10, textvariable=text, command=lambda bartender=bartender: self.drink_menu(bartender))
+			b = Button(top, height=10, width=10, textvariable=text, font=("Helvetica", self.FONT_SMALL), command=lambda bartender=bartender: self.drink_menu(bartender))
 			self.set_text(text)
 			b.grid(row=row, column=col, sticky=N+S+E+W)
 			self.button_texts[bartender] = text
 			i = i + 1
 			
 		Grid.columnconfigure(top, col+1, weight=col/2)
-		Label(top, text="LOG", justify=CENTER, font=("Helvetica", self.screen_height/15, "bold")).grid(row=0, column=col+1)
+		Label(top, text="LOG", justify=CENTER, font=("Helvetica", self.FONT_BIG, "bold")).grid(row=0, column=col+1)
 		
 		self.log = StringVar()
-		Label(top, textvariable=self.log, font=("Helvetica", self.screen_height/60, "bold"), anchor=N, height=20).grid(row=1, column=col+1, rowspan=max_row-1)
+		Label(top, textvariable=self.log, font=("Helvetica", self.FONT_SMALL), anchor=N, height=20).grid(row=1, column=col+1, rowspan=max_row-1)
 		
 		top.mainloop()
 
@@ -149,7 +152,7 @@ class GUI:
 		name_frame.grid(row=0, column=0, sticky=N+S+E+W)
 		Grid.columnconfigure(name_frame, 0, weight=1)
 		Grid.columnconfigure(name_frame, 0, weight=1)
-		Label(name_frame, text=bartender, justify=CENTER, font=("Helvetica", self.screen_height/15)).grid(row=0, column=0, sticky=N+S+E+W)
+		Label(name_frame, text=bartender, justify=CENTER, font=("Helvetica", self.FONT_BIG)).grid(row=0, column=0, sticky=N+S+E+W)
 		
 		amount_grid = Frame(menu)
 		amount_grid.grid(row=1, column=0, sticky=N+S+E+W)
@@ -161,14 +164,14 @@ class GUI:
 		
 		amount = StringVar()
 		amount.set("1")
-		self.amount_text = Entry(amount_grid, width=20, font=("Helvetica", self.screen_height/30), textvariable=amount, justify=CENTER)
+		self.amount_text = Entry(amount_grid, width=20, font=("Helvetica", self.FONT_MEDIUM), textvariable=amount, justify=CENTER)
 		self.amount_text.grid(row=0, column=3, sticky=N+S+E+W)
 		self.amount_text.config(state=DISABLED)
 		
 		i = 0
 		for x in [-10, -5, -1, 0, 1, 5, 10]: # 0 is placeholder for the entry field
 			if x != 0:
-				Button(amount_grid, text=str(x) if x < 0 else "+" + str(x), command=lambda x=x: self.set_amount(x)).grid(row=0, column=i, sticky=N+S+E+W)
+				Button(amount_grid, font=("Helvetica", self.FONT_MEDIUM),text=str(x) if x < 0 else "+" + str(x), command=lambda x=x: self.set_amount(x)).grid(row=0, column=i, sticky=N+S+E+W)
 			Grid.columnconfigure(amount_grid, i, weight=1)
 			i = i + 1
 			
@@ -177,13 +180,13 @@ class GUI:
 			(row, col) = self.calc_layout(i, len(self.stregliste.drinks))
 			Grid.rowconfigure(grid, row, weight=1)
 			Grid.columnconfigure(grid, col, weight=1)
-			b = Button(grid, text=drink, command=lambda drink=drink, menu=menu: self.add_drink(bartender, drink, menu))
+			b = Button(grid, text=drink, font=("Helvetica", self.FONT_MEDIUM), command=lambda drink=drink, menu=menu: self.add_drink(bartender, drink, menu))
 			b.grid(row=row, column=col, sticky=N+S+E+W)
 			i = i + 1
 			
 		(row, col) = (row + 1, 0)
 		Grid.rowconfigure(grid, row, weight=1)
-		b = Button(grid, text='Annuller', command=lambda menu=menu: menu.destroy())
+		b = Button(grid, text="Annuller", font=("Helvetica", self.FONT_MEDIUM), command=lambda menu=menu: menu.destroy())
 		b.grid(row=row, column=col, sticky=N+S+E+W)
 			
 		menu.mainloop()
