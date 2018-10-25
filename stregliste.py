@@ -123,17 +123,17 @@ class GUI:
 			text = StringVar()
 			text.set(bartender)
 			# We set a dummy height so that the button doesn't scale with its contents
-			b = Button(top, height=10, textvariable=text, command=lambda bartender=bartender: self.drink_menu(bartender))
+			b = Button(top, height=10, width=10, textvariable=text, command=lambda bartender=bartender: self.drink_menu(bartender))
 			self.set_text(text)
 			b.grid(row=row, column=col, sticky=N+S+E+W)
 			self.button_texts[bartender] = text
 			i = i + 1
 			
 		Grid.columnconfigure(top, col+1, weight=col/2)
-		Label(top, text="LOG", justify=CENTER, font=("Helvetica", 50, "bold")).grid(row=0, column=col+1)
+		Label(top, text="LOG", justify=CENTER, font=("Helvetica", self.screen_height/15, "bold")).grid(row=0, column=col+1)
 		
 		self.log = StringVar()
-		Label(top, textvariable=self.log, font=("Helvetica", 16, "bold"), anchor=N, height=20).grid(row=1, column=col+1, rowspan=max_row-1)
+		Label(top, textvariable=self.log, font=("Helvetica", self.screen_height/60, "bold"), anchor=N, height=20).grid(row=1, column=col+1, rowspan=max_row-1)
 		
 		top.mainloop()
 
@@ -149,7 +149,7 @@ class GUI:
 		name_frame.grid(row=0, column=0, sticky=N+S+E+W)
 		Grid.columnconfigure(name_frame, 0, weight=1)
 		Grid.columnconfigure(name_frame, 0, weight=1)
-		Label(name_frame, text=bartender, justify=CENTER, font=("Helvetica", 50)).grid(row=0, column=0, sticky=N+S+E+W)
+		Label(name_frame, text=bartender, justify=CENTER, font=("Helvetica", self.screen_height/15)).grid(row=0, column=0, sticky=N+S+E+W)
 		
 		amount_grid = Frame(menu)
 		amount_grid.grid(row=1, column=0, sticky=N+S+E+W)
@@ -161,7 +161,7 @@ class GUI:
 		
 		amount = StringVar()
 		amount.set("1")
-		self.amount_text = Entry(amount_grid, width=20, font=("Helvetica", 32), textvariable=amount, justify=CENTER)
+		self.amount_text = Entry(amount_grid, width=20, font=("Helvetica", self.screen_height/30), textvariable=amount, justify=CENTER)
 		self.amount_text.grid(row=0, column=3, sticky=N+S+E+W)
 		self.amount_text.config(state=DISABLED)
 		
