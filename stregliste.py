@@ -108,7 +108,7 @@ class GUI:
 		top.attributes('-fullscreen', True)
 		self.screen_width = top.winfo_screenwidth()
 		self.screen_height = top.winfo_screenheight()
-		self.FONT_SMALL = self.screen_height/80
+		self.FONT_SMALL = self.screen_height/60
 		self.FONT_MEDIUM = self.screen_height/40
 		self.FONT_BIG = self.screen_height/20
 		
@@ -126,7 +126,7 @@ class GUI:
 			text = StringVar()
 			text.set(bartender)
 			# We set a dummy height so that the button doesn't scale with its contents
-			b = Button(top, height=10, width=10, textvariable=text, font=("Helvetica", self.FONT_SMALL), command=lambda bartender=bartender: self.drink_menu(bartender))
+			b = Button(top, height=10, width=10, textvariable=text, anchor=N, font=("Helvetica", self.FONT_SMALL), command=lambda bartender=bartender: self.drink_menu(bartender))
 			self.set_text(text)
 			b.grid(row=row, column=col, sticky=N+S+E+W)
 			self.button_texts[bartender] = text
